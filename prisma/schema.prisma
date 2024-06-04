@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Amenities {
+  id         String     @id @default(uuid())
+  name       String
+  properties Properties[]
+}
+
+model Bookings {
+  id             String   @id @default(uuid())
+  userId         String   @unique @default(uuid())
+  user           Users     @relation(fields: [userId], references: [id])
+  propertyId     String   @unique @default(uuid())
+  property       Properties @relation(fields: [propertyId], references: [id])
+  checkinDate    DateTime
+  checkoutDate   DateTime
+  numberOfGuests Int
+  totalPrice     Decimal
+  bookingStatus  String
+}
+
+model Hosts {
+  id          String     @id @default(uuid())
+  username    String     @unique
+  password    String
+  name        String
+  email       String
+  phoneNumber String
+  pictureUrl  String
+  aboutMe     String
+  listings    Properties[]
+}
+
+model Properties {
+  id            String    @id @default(uuid())
+  hostId        String    @unique @default(uuid())
+  host          Hosts      @relation(fields: [hostId], references: [id])
+  title         String
+  description   String
+  location      String
+  pricePerNight Decimal
+  bedroomCount  Int
+  bathroomCount Int
+  maxGuestCount Int
+  rating        Int
+  amenities     Amenities[]
+  bookings      Bookings[]
+  reviews       Reviews[]
+}
+
+model Reviews {
+  id         String   @id @default(uuid())
+  userId     String   @unique @default(uuid())
+  user       Users     @relation(fields: [userId], references: [id])
+  propertyId String   @unique @default(uuid())
+  property   Properties @relation(fields: [propertyId], references: [id])
+  rating     Int
+  comment    String
+}
+
+model Users {
+  id          String    @id @default(uuid())
+  username    String    @unique
+  password    String
+  name        String
+  email       String
+  phoneNumber String
+  pictureUrl  String
+  bookings    Bookings[]
+  reviews     Reviews[]
+}
