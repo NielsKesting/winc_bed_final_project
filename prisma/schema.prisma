@@ -11,20 +11,21 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  // relationMode = "foreignKeys"
 }
 
 model Amenities {
   id         String     @id @default(uuid())
   name       String
-  properties Properties[]
+  // properties Properties[]
 }
 
 model Bookings {
-  id             String   @id @default(uuid())
-  userId         String   @unique @default(uuid())
-  user           Users     @relation(fields: [userId], references: [id])
-  propertyId     String   @unique @default(uuid())
-  property       Properties @relation(fields: [propertyId], references: [id])
+  id             String     @id @default(uuid())
+  userId         String     @default(uuid())
+  // user           Users      @relation(fields: [userId], references: [id])
+  propertyId     String     @default(uuid())
+  // property       Properties @relation(fields: [propertyId], references: [id])
   checkinDate    DateTime
   checkoutDate   DateTime
   numberOfGuests Int
@@ -33,52 +34,52 @@ model Bookings {
 }
 
 model Hosts {
-  id          String     @id @default(uuid())
-  username    String     @unique
-  password    String
-  name        String
-  email       String
-  phoneNumber String
-  pictureUrl  String
-  aboutMe     String
-  listings    Properties[]
+  id              String     @id @default(uuid())
+  // username      String     @unique
+  password        String
+  name            String
+  email           String
+  phoneNumber     String
+  profilePicture  String
+  aboutMe         String
+  // listings    Properties[]
 }
 
 model Properties {
   id            String    @id @default(uuid())
-  hostId        String    @unique @default(uuid())
-  host          Hosts      @relation(fields: [hostId], references: [id])
+  hostId        String    @default(uuid())
+  // host          Hosts     @relation(fields: [hostId], references: [id])
   title         String
   description   String
   location      String
   pricePerNight Decimal
   bedroomCount  Int
-  bathroomCount Int
+  bathRoomCount Int
   maxGuestCount Int
   rating        Int
-  amenities     Amenities[]
-  bookings      Bookings[]
-  reviews       Reviews[]
+  // amenities     Amenities[]
+  // bookings      Bookings[]
+  // reviews       Reviews[]
 }
 
 model Reviews {
-  id         String   @id @default(uuid())
-  userId     String   @unique @default(uuid())
-  user       Users     @relation(fields: [userId], references: [id])
-  propertyId String   @unique @default(uuid())
-  property   Properties @relation(fields: [propertyId], references: [id])
+  id         String     @id @default(uuid())
+  userId     String     @default(uuid())
+  // user       Users      @relation(fields: [userId], references: [id])
+  propertyId String     @default(uuid())
+  // property   Properties @relation(fields: [propertyId], references: [id])
   rating     Int
   comment    String
 }
 
 model Users {
-  id          String    @id @default(uuid())
-  username    String    @unique
-  password    String
-  name        String
-  email       String
-  phoneNumber String
-  pictureUrl  String
-  bookings    Bookings[]
-  reviews     Reviews[]
+  id              String    @id @default(uuid())
+  username        String    @unique
+  password        String
+  name            String
+  email           String
+  phoneNumber     String
+  profilePicture  String
+  // bookings    Bookings[]
+  // reviews     Reviews[]
 }

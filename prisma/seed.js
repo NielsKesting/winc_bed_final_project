@@ -25,11 +25,7 @@ async function main() {
 	}
 	for (const booking of bookings) {
 		await prisma.bookings.upsert({
-			where: {
-				id: booking.id,
-				userId: booking.userId,
-				propertyId: booking.propertyId,
-			},
+			where: { id: booking.id },
 			update: {},
 			create: booking,
 		});
