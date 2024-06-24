@@ -1,26 +1,31 @@
-import bookingData from "../../data/bookings.json" assert { type: "json" };
+import hostData from "../../data/hosts.json" assert { type: "json" };
 
-const updatebookingById = (
+const updateHostById = (
 	id,
-	checkinDate,
-	checkoutDate,
-	numberOfGuests,
-	totalPrice,
-	bookingStatus
+	username,
+	password,
+	name,
+	email,
+	phoneNumber,
+	profilePicture,
+	aboutMe
 ) => {
-	const booking = bookingData.amenities.find((booking) => booking.id === id);
+	const host = hostData.amenities.find((host) => host.id === id);
 
-	if (!booking) {
-		throw new Error(`booking with id ${id} was not found!`);
+	if (!host) {
+		throw new Error(`host with id ${id} was not found!`);
 	}
 
-	booking.checkinDate = checkinDate ?? booking.checkinDate;
-	booking.checkoutDate = checkoutDate ?? booking.checkoutDate;
-	booking.numberOfGuests = numberOfGuests ?? booking.numberOfGuests;
-	booking.totalPrice = totalPrice ?? booking.totalPrice;
-	booking.bookingStatus = bookingStatus ?? booking.bookingStatus;
+	host.id = id ?? host.id;
+	host.username = username ?? host.username;
+	host.password = password ?? host.password;
+	host.name = name ?? host.name;
+	host.email = email ?? host.email;
+	host.phoneNumber = phoneNumber ?? host.phoneNumber;
+	host.profilePicture = profilePicture ?? host.profilePicture;
+	host.aboutMe = aboutMe ?? host.aboutMe;
 
-	return booking;
+	return host;
 };
 
-export default updatebookingById;
+export default updateHostById;
